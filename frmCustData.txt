@@ -1,0 +1,21 @@
+Private Sub UserForm_Initialize()
+MsgBox (pub_CustId)
+MsgBox (pub_LastRow)
+Application.Worksheets(pub_CustId).Select
+
+Me.LBCustData.ColumnCount = 11
+'Me.LBCustData.RowSource = "B10:L14"
+Me.LBCustData.RowSource = "B10:L" & pub_LastRow
+'Me.LBCustData.RowSource = Application.Worksheets(pub_CustId).Range("B10:L" & pub_LastRow)
+'Me.LBCustData.RowSource = Rng
+
+Application.Worksheets("FORM").Select
+End Sub
+
+
+Private Sub LBCustData_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
+    Me.Hide
+    frmNewCustomer.Show
+    
+End Sub
+

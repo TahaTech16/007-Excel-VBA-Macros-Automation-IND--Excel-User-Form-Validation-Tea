@@ -1,0 +1,898 @@
+
+Private Sub btnAdd_Click()
+        
+        Dim LastRow As Integer
+        Dim ws As Worksheet
+        Dim Sheet As Worksheet
+        Dim TempSheetName As String
+        Dim FoundSheetName As String
+        
+        Dim custIdNo As Variant
+        custIdNo = cmb_CustId.Value
+        
+        If custIdNo = "" Then
+            'MsgBox "Please Select CUST_ID First !"
+            Exit Sub
+        End If
+        
+        TempSheetName = UCase(custIdNo)
+        WorksheetExists = False
+        
+        For Each Sheet In ThisWorkbook.Worksheets
+            If TempSheetName = UCase(Sheet.Name) Then
+                WorksheetExists = True
+                FoundSheetName = UCase(Sheet.Name)
+                'MsgBox "Excel Worksheet Found !"
+                
+                Exit For
+            End If
+        Next Sheet
+
+        
+        If WorksheetExists = False Then
+            'MsgBox "Excel Worksheet Not Found,Please Create Sheet First !"
+            Exit Sub
+        End If
+        
+            Set ws = Worksheets(FoundSheetName)
+            LastRow = Worksheets(FoundSheetName).Cells(Rows.count, 3).End(xlUp).Row
+            LastRow = LastRow + 1
+        
+            txtTrCode.Text = Worksheets(FoundSheetName).Cells(LastRow, 2).Value
+
+'''====
+        txtDate.SetFocus
+        txtDate.Text = Now()
+        txtDate.Text = Format(txtDate.Text, "dd/mm/yyyy")
+        
+If Trim(txtDate.Text) <> "" Then
+        
+            If Not IsDate(txtDate.Text) Then
+                MsgBox "Please fill Proper Date !"
+                Me.txtDate.SetFocus
+                txtDate.Text = ""
+                Exit Sub
+             Else
+                txtDate.Text = Format(txtDate.Text, "dd/mm/yyyy")
+            End If
+    
+    Else
+            MsgBox "Please fill the Date !"
+            Me.txtDate.SetFocus
+            txtDate.Text = ""
+            Exit Sub
+    End If
+
+''--
+
+    If Trim(cmbReference.Value) = "" Then
+        MsgBox "Please Select the Reference !"
+        Me.cmbReference.SetFocus
+        Exit Sub
+    End If
+
+
+''-- Bill Conditions
+
+    If Trim(cmbReference.Value) = "Bill" And Trim(txtRefNo.Text) = "" Then
+            MsgBox "Reference Number can not blank with Bill !"
+            Me.txtRefNo.SetFocus
+            txtRefNo.Text = ""
+            Exit Sub
+            
+    ElseIf Trim(cmbReference.Value) = "Bill" And Len(Trim(txtRefNo.Text)) > 10 Then
+            MsgBox "Please fill Proper Reference Number !"
+            Me.txtRefNo.SetFocus
+            txtRefNo.Text = ""
+            Exit Sub
+    
+    ElseIf Trim(cmbReference.Value) = "Bill" And Not IsNumeric(txtRefNo.Text) Then
+            MsgBox "Please fill Numeric Reference Number !"
+            Me.txtRefNo.SetFocus
+            txtRefNo.Text = ""
+            Exit Sub
+    
+'    ''ElseIf Trim(cmbReference.Value) = "Bill" And Not Int(txtRefNo.Value) Then  ''TypeName
+'    ElseIf Trim(cmbReference.Value) = "Bill" And TypeName(txtRefNo.Value) <> "Integer" Then ''TypeName
+'            MsgBox "Please don't enter decimal/point value !"
+'            Me.txtRefNo.SetFocus
+'            txtRefNo.Text = ""
+'            Exit Sub
+
+    
+    ElseIf Trim(cmbReference.Value) = "Bill" And Trim(txtSale.Text) = "" Then
+            MsgBox "Sales Amount Can not Blank with Bill !"
+            Me.txtSale.SetFocus
+            txtSale.Text = ""
+            Exit Sub
+    
+    ElseIf Trim(cmbReference.Value) = "Bill" And (Len(Trim(txtSale.Text)) > 7 Or Trim(txtSale.Text) < 1000 Or Trim(txtSale.Text) > 5000000 Or Not IsNumeric(txtSale.Text)) Then
+            MsgBox "Please fill Proper Sale Amount Number !"
+            Me.txtSale.SetFocus
+            txtSale.Text = ""
+            Exit Sub
+           
+            
+    ElseIf Trim(cmbReference.Value) = "Bill" And Trim(txtPayment.Text) <> "" Then
+            MsgBox "You can not enter Payment Amount with Bill !"
+            Me.cmbReference.SetFocus
+            txtPayment.Text = ""
+            Exit Sub
+                   
+    ElseIf Trim(cmbReference.Value) = "Bill" And Trim(cmbMode.Value) <> "" Then
+            MsgBox "You can not enter Mode with Bill !"
+            Me.cmbReference.SetFocus
+            cmbMode.Text = ""
+            Exit Sub
+                          
+    ElseIf Trim(cmbReference.Value) = "Bill" And Trim(txtModeNo.Text) <> "" Then
+            MsgBox "You can not enter Mode Number with Bill !"
+            Me.txtModeNo.SetFocus
+            txtModeNo.Text = ""
+            Exit Sub
+                                 
+                          
+    ElseIf Trim(cmbReference.Value) = "Bill" And Trim(txtModeDate.Text) <> "" Then
+            MsgBox "You can not enter Mode Date with Bill !"
+            Me.cmbReference.SetFocus
+            txtModeDate.Text = ""
+            Exit Sub
+                                 
+              
+    Else
+    
+        
+    End If
+
+''---------------
+
+''-- Reciept Conditions
+
+    If Trim(cmbReference.Value) = "Reciept" And Trim(txtRefNo.Text) <> "" Then
+            MsgBox "You can not enter Reference Number with Reciept !"
+            Me.cmbReference.SetFocus
+            txtRefNo.Text = ""
+            Exit Sub
+            
+    ElseIf Trim(cmbReference.Value) = "Reciept" And Trim(txtSale.Text) <> "" Then
+            MsgBox "You can not enter Sale Amount with Reciept !"
+            Me.cmbReference.SetFocus
+            txtSale.Text = ""
+            Exit Sub
+
+    ElseIf Trim(cmbReference.Value) = "Reciept" And Trim(txtPayment.Text) = "" Then
+            MsgBox "Payment Amount Can not Blank with Reciept !"
+            Me.txtPayment.SetFocus
+            txtPayment.Text = ""
+            Exit Sub
+    
+    ElseIf Trim(cmbReference.Value) = "Reciept" And (Len(Trim(txtPayment.Text)) > 7 Or Trim(txtPayment.Text) < 1000 Or Trim(txtPayment.Text) > 5000000 Or Not IsNumeric(txtPayment.Text)) Then
+            MsgBox "Please fill Proper Payment Amount !"
+            Me.txtPayment.SetFocus
+            txtPayment.Text = ""
+            Exit Sub
+            
+    ElseIf Trim(cmbReference.Value) = "Reciept" And Trim(cmbMode.Value) = "" Then
+            MsgBox "You can not enter blank Mode with Reciept !"
+            Me.cmbMode.SetFocus
+            'cmbMode.Text = ""
+            Exit Sub
+                          
+    ElseIf Trim(cmbMode.Value) = "Cash" And Trim(txtModeNo.Text) <> "" Then
+            MsgBox "You can not enter Mode Number with Cash !"
+            Me.cmbMode.SetFocus
+            txtModeNo.Text = ""
+            Exit Sub
+                                 
+     ElseIf Trim(cmbMode.Value) = "Cash" And Trim(txtModeDate.Text) <> "" Then
+            MsgBox "You can not enter Mode Date with Cash !"
+            Me.cmbMode.SetFocus
+            txtModeDate.Text = ""
+            Exit Sub
+                            
+                          
+    ElseIf Trim(cmbMode.Value) = "Cheque" And Trim(txtModeNo.Text) = "" Then
+            MsgBox "You can not enter blank Mode Number with Cheque !"
+            Me.txtModeNo.SetFocus
+            'txtModeNo.Text = ""
+            Exit Sub
+                                 
+    ElseIf Trim(cmbMode.Value) = "Cheque" And Len(Trim(txtModeNo.Text)) > 6 Then
+            MsgBox "Please fill Proper Mode Number !"
+            Me.txtModeNo.SetFocus
+            txtModeNo.Text = ""
+            Exit Sub
+    
+    ElseIf Trim(cmbMode.Value) = "Cheque" And Not IsNumeric(txtModeNo.Text) Then
+            MsgBox "Please fill Numeric Mode Number !"
+            Me.txtModeNo.SetFocus
+            txtModeNo.Text = ""
+            Exit Sub
+                                 
+                                 
+     ElseIf Trim(cmbMode.Value) = "Cheque" And Trim(txtModeDate.Text) = "" Then
+            MsgBox "You can not enter blank Mode Date with Cheque !"
+            Me.txtModeDate.SetFocus
+            txtModeDate.Text = ""
+            Exit Sub
+                   
+    ElseIf Trim(cmbMode.Value) = "Cheque" And Not IsDate(txtModeDate.Text) Then
+            MsgBox "Enter DD/MM/YYYY Mode Date with Cheque !"
+            Me.txtModeDate.SetFocus
+            txtModeDate.Text = ""
+            Exit Sub
+                                     
+              
+    Else
+    
+        
+    End If
+
+'
+'
+'    If Trim(txtSale.Text) <> "" Then
+'
+'        If Len(Trim(txtSale.Text)) > 7 Or Trim(txtSale.Text) < 1000 Or Trim(txtSale.Text) > 5000000 Or Not IsNumeric(txtSale.Text) Then
+'            MsgBox "Please fill Proper Sale Amount !"
+'            Me.txtSale.SetFocus
+'            txtSale.Text = ""
+'            Exit Sub
+'        End If
+'
+'    Else
+'            MsgBox "Please fill the Sale Amount !"
+'            Me.txtSale.SetFocus
+'            txtSale.Text = ""
+'            Exit Sub
+'    End If
+'
+'
+'    If Trim(txtPayment.Text) <> "" Then
+'
+'        If Len(Trim(txtPayment.Text)) > 7 Or Trim(txtPayment.Text) < 1000 Or Trim(txtPayment.Text) > 5000000 Or Not IsNumeric(txtPayment.Text) Then
+'            MsgBox "Please fill Proper Payment Amount !"
+'            Me.txtPayment.SetFocus
+'            txtPayment.Text = ""
+'            Exit Sub
+'        End If
+'
+'    Else
+'            MsgBox "Please fill the Payment Amount !"
+'            Me.txtPayment.SetFocus
+'            txtPayment.Text = ""
+'            Exit Sub
+'    End If
+'
+'''--
+'
+'    If Trim(cmbMode.Value) = "" Then
+'        MsgBox "Please Select the Mode !"
+'        Me.cmbMode.SetFocus
+'        Exit Sub
+'    End If
+'
+'''--
+'    If Trim(txtModeNo.Text) <> "" Then
+'
+'        If Len(Trim(txtModeNo.Text)) > 6 Or Not IsNumeric(txtModeNo.Text) Then
+'            MsgBox "Please fill Proper Mode Number !"
+'            Me.txtModeNo.SetFocus
+'            txtModeNo.Text = ""
+'            Exit Sub
+'        End If
+'
+'    Else
+'            MsgBox "Please fill the Mode Number !"
+'            Me.txtModeNo.SetFocus
+'            txtModeNo.Text = ""
+'            Exit Sub
+'    End If
+'
+'''--
+'
+'    If Trim(txtModeDate.Text) <> "" Then
+'
+'            If Not IsDate(txtModeDate.Text) Then
+'                MsgBox "Please fill Proper Mode Date !"
+'                Me.txtModeDate.SetFocus
+'                txtModeDate.Text = ""
+'                Exit Sub
+'             Else
+'                txtModeDate.Text = Format(txtModeDate.Text, "dd/mm/yyyy")
+'            End If
+'
+'    Else
+'            MsgBox "Please fill the Mode Date !"
+'            Me.txtModeDate.SetFocus
+'            txtModeDate.Text = ""
+'            Exit Sub
+'    End If
+    
+    
+ If IsDate(txtModeDate.Text) And Trim(cmbMode.Value) = "Cheque" And Trim(txtModeDate.Text) <> "" Then
+          txtModeDate.Text = Format(txtModeDate.Text, "dd/mm/yyyy")
+ End If
+
+    If LastRow = 9 Then
+        MsgBox "Record Can not Insert"
+        Exit Sub
+    End If
+
+    If cmbReference.Value = "Bill" Then
+        txtPayment.Text = ""
+        cmbMode.Value = ""
+        txtModeNo.Text = ""
+        txtModeDate.Text = ""
+        
+    End If
+
+    If cmbReference.Value = "Reciept" Then
+        txtRefNo.Text = ""
+        txtSale.Text = ""
+    End If
+        
+    If cmbMode.Value = "Cash" Then
+        txtModeNo.Text = ""
+        txtModeDate.Text = ""
+        
+    End If
+        
+   
+   answer = MsgBox("Are you sure you wish to Add the Record ?", vbYesNo + vbQuestion, "Add Record ?")
+    
+    If answer = vbNo Then
+         Exit Sub
+    End If
+
+        
+        ws.Cells(LastRow, 3).Value = txtDate.Value
+        ws.Cells(LastRow, 4).Value = cmbReference.Value
+        ws.Cells(LastRow, 5).Value = txtRefNo.Value
+        ws.Cells(LastRow, 6).Value = txtSale.Value
+        ws.Cells(LastRow, 7).Value = txtPayment.Value
+        ws.Cells(LastRow, 8).Value = cmbMode.Value
+        ws.Cells(LastRow, 9).Value = txtModeNo.Value
+        ws.Cells(LastRow, 10).Value = txtModeDate.Value
+
+        
+        MsgBox "Record Added Successfuly !"
+        Call ClearRecords
+
+
+End Sub
+
+Sub ClearRecords()
+        txtTrCode.Text = ""
+        txtDate.Text = ""
+        cmbReference.Value = ""
+        txtRefNo.Text = ""
+        txtSale.Text = ""
+        txtPayment.Text = ""
+        cmbMode.Value = ""
+        txtModeNo.Text = ""
+        txtModeDate.Text = ""
+        
+        txtTrCode.SetFocus
+        
+        
+        Dim LastRow As Integer
+        Dim ws As Worksheet
+        Dim Sheet As Worksheet
+        Dim TempSheetName As String
+        Dim FoundSheetName As String
+        
+        Dim custIdNo As Variant
+        custIdNo = cmb_CustId.Value
+        
+        If custIdNo = "" Then
+            'MsgBox "Please Select CUST_ID First !"
+            Exit Sub
+        End If
+        
+        TempSheetName = UCase(custIdNo)
+        WorksheetExists = False
+        
+        For Each Sheet In ThisWorkbook.Worksheets
+            If TempSheetName = UCase(Sheet.Name) Then
+                WorksheetExists = True
+                FoundSheetName = UCase(Sheet.Name)
+                'MsgBox "Excel Worksheet Found !"
+                
+                Exit For
+            End If
+        Next Sheet
+
+        
+        If WorksheetExists = False Then
+            'MsgBox "Excel Worksheet Not Found,Please Create Sheet First !"
+            Exit Sub
+        End If
+        
+            Set ws = Worksheets(FoundSheetName)
+            LastRow = Worksheets(FoundSheetName).Cells(Rows.count, 3).End(xlUp).Row
+            LastRow = LastRow + 1
+        
+            txtTrCode.Text = Worksheets(FoundSheetName).Cells(LastRow, 2).Value
+End Sub
+
+
+Private Sub btnClear_Click()
+        
+        txtTrCode.Text = ""
+        txtDate.Text = ""
+        cmbReference.Value = ""
+        txtRefNo.Text = ""
+        txtSale.Text = ""
+        txtPayment.Text = ""
+        cmbMode.Value = ""
+        txtModeNo.Text = ""
+        txtModeDate.Text = ""
+        
+        'txtTrCode.SetFocus
+        
+        txtDate.SetFocus
+        txtDate.Text = Now()
+        txtDate.Text = Format(txtDate.Text, "dd/mm/yyyy")
+        
+        Dim LastRow As Integer
+        Dim ws As Worksheet
+        Dim Sheet As Worksheet
+        Dim TempSheetName As String
+        Dim FoundSheetName As String
+        
+        Dim custIdNo As Variant
+        custIdNo = cmb_CustId.Value
+        
+        If custIdNo = "" Then
+            MsgBox "Please Select CUST_ID First !"
+            Exit Sub
+        End If
+        
+        TempSheetName = UCase(custIdNo)
+        WorksheetExists = False
+        
+        For Each Sheet In ThisWorkbook.Worksheets
+            If TempSheetName = UCase(Sheet.Name) Then
+                WorksheetExists = True
+                FoundSheetName = UCase(Sheet.Name)
+                MsgBox "Excel Worksheet Found !"
+                
+                Exit For
+            End If
+        Next Sheet
+
+        
+        If WorksheetExists = False Then
+            MsgBox "Excel Worksheet Not Found,Please Create Sheet First !"
+            Exit Sub
+        End If
+        
+            Set ws = Worksheets(FoundSheetName)
+            LastRow = Worksheets(FoundSheetName).Cells(Rows.count, 3).End(xlUp).Row
+            LastRow = LastRow + 1
+        
+            txtTrCode.Text = Worksheets(FoundSheetName).Cells(LastRow, 2).Value
+        
+End Sub
+
+Private Sub btnCustRecord_Click()
+
+End Sub
+
+
+
+
+Private Sub btnDelete_Click()
+
+End Sub
+
+Private Sub btnExit_Click()
+    Me.Hide
+End Sub
+
+Private Sub btnMoveFirst_Click()
+        Dim LastRow As Integer
+        Dim ws As Worksheet
+        Set ws = Worksheets("DASHBOARD")
+        LastRow = Worksheets("DASHBOARD").Cells(Rows.count, 3).End(xlUp).Row
+        
+          
+        If LastRow < 6 Then
+            MsgBox "There is No Records !"
+            Me.cmb_CustId.SetFocus
+            Exit Sub
+        End If
+
+Call showFirstRecord
+
+        MsgBox "This is Your's First Record !"
+  
+End Sub
+
+Private Sub btnMoveLast_Click()
+        Dim LastRow As Integer
+        Dim ws As Worksheet
+        Set ws = Worksheets("DASHBOARD")
+        LastRow = Worksheets("DASHBOARD").Cells(Rows.count, 3).End(xlUp).Row
+        
+          
+        If LastRow < 6 Then
+            MsgBox "There is No Records !"
+            Me.cmb_CustId.SetFocus
+            Exit Sub
+        End If
+        
+        Call showLastRecord
+        MsgBox "This is Your's Last Record !"
+
+
+End Sub
+
+Private Sub btnMoveNext_Click()
+        Dim LastRow As Integer
+        Dim ws As Worksheet
+        Dim intCustSrNo As Integer
+        Dim cId As Variant
+        Dim currentId As Integer
+        Dim checkId As Integer
+        
+        
+        Set ws = Worksheets("DASHBOARD")
+        LastRow = Worksheets("DASHBOARD").Cells(Rows.count, 3).End(xlUp).Row
+        
+        If txtCustName.Text = "" Then
+            Call showLastRecord
+            MsgBox "This is Your's Last Record !"
+            Me.cmb_CustId.SetFocus
+            Exit Sub
+        End If
+        
+        cId = cmb_CustId.Value
+        cId = Right(cId, Len(cId) - 2)
+        currentId = cId
+        
+        If currentId = 0 Then
+            MsgBox "This is Your's Last Record !"
+            Me.cmb_CustId.SetFocus
+            Exit Sub
+        End If
+        
+        If LastRow < 6 Then
+            MsgBox "There is No Records !"
+            Me.cmb_CustId.SetFocus
+            Exit Sub
+        End If
+        
+         currentId = currentId + 5
+        
+        If currentId > LastRow Then
+            MsgBox "This is Your's Last Record !"
+            Me.cmb_CustId.SetFocus
+            Exit Sub
+        End If
+         
+         intCustSrNo = currentId + 1
+         
+            cmb_CustId.Text = Worksheets("DASHBOARD").Cells(intCustSrNo, 2).Value
+            txtCustName.Text = Worksheets("DASHBOARD").Cells(intCustSrNo, 3).Value
+            txtDistrict.Text = Worksheets("DASHBOARD").Cells(intCustSrNo, 4).Value
+            txtState.Text = Worksheets("DASHBOARD").Cells(intCustSrNo, 5).Value
+            txtMobile.Text = Worksheets("DASHBOARD").Cells(intCustSrNo, 6).Value
+            txtLedger.Text = Worksheets("DASHBOARD").Cells(intCustSrNo, 7).Value
+            txtBalance.Text = Worksheets("DASHBOARD").Cells(intCustSrNo, 8).Value
+            txtFinancialYear.Text = Worksheets("DASHBOARD").Cells(1, 8).Value
+            txtDateToday.Text = Worksheets("DASHBOARD").Cells(2, 8).Value
+            
+            cmb_CustId.SetFocus
+
+End Sub
+
+Private Sub btnMovePrevios_Click()
+        Dim LastRow As Integer
+        Dim ws As Worksheet
+        Dim intCustSrNo As Integer
+        Dim cId As Variant
+        Dim currentId As Integer
+        Dim checkId As Integer
+        
+        
+        Set ws = Worksheets("DASHBOARD")
+        LastRow = Worksheets("DASHBOARD").Cells(Rows.count, 3).End(xlUp).Row
+        
+        If txtCustName.Text = "" Then
+            Call showFirstRecord
+            MsgBox "This is Your's First Record !"
+            Me.cmb_CustId.SetFocus
+            Exit Sub
+        End If
+        
+        cId = cmb_CustId.Value
+        cId = Right(cId, Len(cId) - 2)
+        currentId = cId
+        
+        If currentId = 0 Then
+            MsgBox "This is Your's First Record !"
+            Me.cmb_CustId.SetFocus
+            Exit Sub
+        End If
+        
+        If currentId = 1 Then
+            MsgBox "This is Your's First Record !"
+            Me.cmb_CustId.SetFocus
+            Exit Sub
+        End If
+
+        If LastRow < 6 Then
+            MsgBox "There is No Records !"
+            Me.cmb_CustId.SetFocus
+            Exit Sub
+        End If
+        
+         currentId = currentId + 5
+        
+        If currentId > LastRow Then
+            MsgBox "This is Your's Last Record !"
+            Me.cmb_CustId.SetFocus
+            Exit Sub
+        End If
+         
+         intCustSrNo = currentId - 1
+         
+            cmb_CustId.Text = Worksheets("DASHBOARD").Cells(intCustSrNo, 2).Value
+            txtCustName.Text = Worksheets("DASHBOARD").Cells(intCustSrNo, 3).Value
+            txtDistrict.Text = Worksheets("DASHBOARD").Cells(intCustSrNo, 4).Value
+            txtState.Text = Worksheets("DASHBOARD").Cells(intCustSrNo, 5).Value
+            txtMobile.Text = Worksheets("DASHBOARD").Cells(intCustSrNo, 6).Value
+            txtLedger.Text = Worksheets("DASHBOARD").Cells(intCustSrNo, 7).Value
+            txtBalance.Text = Worksheets("DASHBOARD").Cells(intCustSrNo, 8).Value
+            txtFinancialYear.Text = Worksheets("DASHBOARD").Cells(1, 8).Value
+            txtDateToday.Text = Worksheets("DASHBOARD").Cells(2, 8).Value
+            
+            cmb_CustId.SetFocus
+
+End Sub
+
+Private Sub btnSearch_Click()
+    Dim id As String
+    id = Trim(txtSearch.Text)
+    id = UCase(id)
+    LastRow = Worksheets("DASHBOARD").Cells(Rows.count, 2).End(xlUp).Row
+    
+    Dim MobId As String
+    Dim cName As String
+    Dim srno As String
+    
+    For i = 6 To LastRow
+        srno = Trim(UCase(Worksheets("DASHBOARD").Cells(i, 2).Value))
+        cName = Trim(UCase(Worksheets("DASHBOARD").Cells(i, 3).Value))
+        MobId = Trim(Worksheets("DASHBOARD").Cells(i, 6).Value)
+        
+        If id = "" Then
+            MsgBox ("Please Enter Value !")
+            Exit For
+        End If
+        
+        If srno = id Or cName = id Or MobId = id Then
+            MsgBox ("Record Found !")
+            
+            intCustSrNo = i
+         
+            cmb_CustId.Text = Worksheets("DASHBOARD").Cells(intCustSrNo, 2).Value
+            txtCustName.Text = Worksheets("DASHBOARD").Cells(intCustSrNo, 3).Value
+            txtDistrict.Text = Worksheets("DASHBOARD").Cells(intCustSrNo, 4).Value
+            txtState.Text = Worksheets("DASHBOARD").Cells(intCustSrNo, 5).Value
+            txtMobile.Text = Worksheets("DASHBOARD").Cells(intCustSrNo, 6).Value
+            txtLedger.Text = Worksheets("DASHBOARD").Cells(intCustSrNo, 7).Value
+            txtBalance.Text = Worksheets("DASHBOARD").Cells(intCustSrNo, 8).Value
+            txtFinancialYear.Text = Worksheets("DASHBOARD").Cells(1, 8).Value
+            txtDateToday.Text = Worksheets("DASHBOARD").Cells(2, 8).Value
+            
+            cmb_CustId.SetFocus
+            
+            Exit Sub
+
+        End If
+ 
+    Next
+        'Call clearTextBox
+        MsgBox ("Record Not Found !")
+        txtSearch.SetFocus
+         Exit Sub
+
+End Sub
+
+Sub clearTextBox()
+
+            cmb_CustId.Text = ""
+            txtCustName.Text = ""
+            txtDistrict.Text = ""
+            txtState.Text = ""
+            txtMobile.Text = ""
+            txtLedger.Text = ""
+            txtBalance.Text = ""
+            txtFinancialYear.Text = ""
+            txtDateToday.Text = ""
+            
+            cmb_CustId.SetFocus
+
+End Sub
+
+
+Private Sub btnShowRecord_Click()
+    Call showLastRecord
+End Sub
+
+Private Sub btnUpdate_Click()
+
+End Sub
+
+
+Private Sub cmb_CustId_Change()
+        Dim LastRow As Integer
+        Dim ws As Worksheet
+        Dim intCustSrNo As Integer
+        Dim cId As Variant
+        Dim currentId As Integer
+        Dim checkId As Integer
+        
+        
+        Set ws = Worksheets("DASHBOARD")
+        LastRow = Worksheets("DASHBOARD").Cells(Rows.count, 2).End(xlUp).Row ''// for CustId
+        
+        If cmb_CustId.Text = "" Then
+            Call showFirstRecord
+            MsgBox "This is Your's First Record !"
+            Me.cmb_CustId.SetFocus
+            Exit Sub
+        End If
+        
+        cId = cmb_CustId.Value
+        cId = Right(cId, Len(cId) - 2)
+        currentId = cId
+        
+        If currentId = 0 Then
+            MsgBox "This is Your's First Record !"
+            Me.cmb_CustId.SetFocus
+            Exit Sub
+        End If
+        
+        If currentId = 1 Then
+            'MsgBox "This is Your's First Record !"
+            Me.cmb_CustId.SetFocus
+            'Exit Sub
+        End If
+
+        If LastRow < 6 Then
+            MsgBox "There is No Records !"
+            Me.cmb_CustId.SetFocus
+            Exit Sub
+        End If
+        
+         currentId = currentId + 5
+        
+        If currentId > LastRow Then
+            MsgBox "This is Your's Last Record !"
+            Me.cmb_CustId.SetFocus
+            Exit Sub
+        End If
+         
+         intCustSrNo = currentId
+         
+            cmb_CustId.Text = Worksheets("DASHBOARD").Cells(intCustSrNo, 2).Value
+            txtCustName.Text = Worksheets("DASHBOARD").Cells(intCustSrNo, 3).Value
+            txtDistrict.Text = Worksheets("DASHBOARD").Cells(intCustSrNo, 4).Value
+            txtState.Text = Worksheets("DASHBOARD").Cells(intCustSrNo, 5).Value
+            txtMobile.Text = Worksheets("DASHBOARD").Cells(intCustSrNo, 6).Value
+            txtLedger.Text = Worksheets("DASHBOARD").Cells(intCustSrNo, 7).Value
+            txtBalance.Text = Worksheets("DASHBOARD").Cells(intCustSrNo, 8).Value
+            txtFinancialYear.Text = Worksheets("DASHBOARD").Cells(1, 8).Value
+            txtDateToday.Text = Worksheets("DASHBOARD").Cells(2, 8).Value
+            
+            cmb_CustId.SetFocus
+
+End Sub
+
+Private Sub cmbMode_Change()
+    
+    If cmbMode.Value = "" Then
+
+        txtModeNo.Visible = True
+        txtModeDate.Visible = True
+        txtDateFormat.Visible = True
+        lblModeNo.Visible = True
+        lblModeDate.Visible = True
+    End If
+
+    If cmbMode.Value = "Cash" Then
+        txtModeNo.Visible = False
+        txtModeDate.Visible = False
+        txtDateFormat.Visible = False
+        lblModeNo.Visible = False
+        lblModeDate.Visible = False
+    Else
+        txtModeNo.Visible = True
+        txtModeDate.Visible = True
+        txtDateFormat.Visible = True
+        lblModeNo.Visible = True
+        lblModeDate.Visible = True
+        
+    End If
+
+
+End Sub
+
+Private Sub cmbReference_Change()
+    If cmbReference.Value = "" Then
+        txtRefNo.Enabled = True
+        txtSale.Enabled = True
+        txtPayment.Enabled = True
+        cmbMode.Enabled = True
+        txtModeNo.Enabled = True
+        txtModeDate.Enabled = True
+    End If
+    
+    If cmbReference.Value = "Bill" Then
+        txtRefNo.Enabled = True
+        txtSale.Enabled = True
+        txtPayment.Enabled = False
+        cmbMode.Enabled = False
+        txtModeNo.Enabled = False
+        txtModeDate.Enabled = False
+    End If
+    
+    If cmbReference.Value = "Reciept" Then
+        txtRefNo.Enabled = False
+        txtSale.Enabled = False
+        txtPayment.Enabled = True
+        cmbMode.Enabled = True
+        txtModeNo.Enabled = True
+        txtModeDate.Enabled = True
+    End If
+    
+    
+End Sub
+
+Private Sub txtRefNo_Change()
+
+End Sub
+
+Private Sub UserForm_Initialize()
+ Call showFirstRecord
+ 'btnCustRecord.Caption = "Show All Data from Customer ID= " & cmb_CustId.Value & " Customer Name= " & txtCustName.Value
+ btnCustRecord.Caption = "Show All Data From Customer ID= " & cmb_CustId.Value
+End Sub
+
+
+
+Sub showFirstRecord()
+    
+            'i = Worksheets("DASHBOARD").Cells(Rows.count, 3).End(xlUp).Row ''//for name column
+            cmb_CustId.Text = Worksheets("DASHBOARD").Cells(6, 2).Value
+            txtCustName.Text = Worksheets("DASHBOARD").Cells(6, 3).Value
+            txtDistrict.Text = Worksheets("DASHBOARD").Cells(6, 4).Value
+            txtState.Text = Worksheets("DASHBOARD").Cells(6, 5).Value
+            txtMobile.Text = Worksheets("DASHBOARD").Cells(6, 6).Value
+            txtLedger.Text = Worksheets("DASHBOARD").Cells(6, 7).Value
+            txtBalance.Text = Worksheets("DASHBOARD").Cells(6, 8).Value
+            txtFinancialYear.Text = Worksheets("DASHBOARD").Cells(1, 8).Value
+            txtDateToday.Text = Worksheets("DASHBOARD").Cells(2, 8).Value
+            
+            cmb_CustId.SetFocus
+End Sub
+
+Sub showLastRecord()
+
+            i = Worksheets("DASHBOARD").Cells(Rows.count, 3).End(xlUp).Row ''//for name column
+            cmb_CustId.Text = Worksheets("DASHBOARD").Cells(i, 2).Value
+            txtCustName.Text = Worksheets("DASHBOARD").Cells(i, 3).Value
+            txtDistrict.Text = Worksheets("DASHBOARD").Cells(i, 4).Value
+            txtState.Text = Worksheets("DASHBOARD").Cells(i, 5).Value
+            txtMobile.Text = Worksheets("DASHBOARD").Cells(i, 6).Value
+            txtLedger.Text = Worksheets("DASHBOARD").Cells(i, 7).Value
+            txtBalance.Text = Worksheets("DASHBOARD").Cells(i, 8).Value
+            txtFinancialYear.Text = Worksheets("DASHBOARD").Cells(1, 8).Value
+            txtDateToday.Text = Worksheets("DASHBOARD").Cells(2, 8).Value
+            
+            cmb_CustId.SetFocus
+End Sub
+

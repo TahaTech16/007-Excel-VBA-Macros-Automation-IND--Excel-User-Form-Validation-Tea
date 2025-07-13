@@ -1,0 +1,708 @@
+
+Private Sub btnMoveFirst_Click()
+        Dim LastRow As Integer
+        Dim ws As Worksheet
+        Set ws = Worksheets("Registro de Clientes (database)")
+        LastRow = Worksheets("Registro de Clientes (database)").Cells(Rows.count, 1).End(xlUp).Row
+        
+          
+        If LastRow < 4 Then
+            MsgBox "There is No Records !"
+            Me.txtId.SetFocus
+            Exit Sub
+        End If
+        
+      
+            txtCustSrNo.Text = ws.Cells(4, 1).Value
+            txtId.Text = ws.Cells(4, 2).Value
+            txtPerson.Text = ws.Cells(4, 3).Value
+            cmbTypeOfDoc.Text = ws.Cells(4, 4).Value
+            txtPerson1.Text = ws.Cells(4, 5).Value
+            txtContact1.Text = ws.Cells(4, 6).Value
+            txtPerson2.Text = ws.Cells(4, 7).Value
+            txtContact2.Text = ws.Cells(4, 8).Value
+            txtPerson3.Text = ws.Cells(4, 9).Value
+            txtContact3.Text = ws.Cells(4, 10).Value
+           ' txtVendor.Text = ws.Cells(4, 11).Value
+            cmbVendor.Text = ws.Cells(4, 11).Value
+            
+            txtAddress.Text = ws.Cells(4, 12).Value
+            txtEmail.Text = ws.Cells(4, 13).Value
+            
+            txtId.SetFocus
+
+        MsgBox "This is Your's First Record !"
+   
+    
+End Sub
+
+Private Sub btnMovePrevios_Click()
+        Dim LastRow As Integer
+        Dim ws As Worksheet
+        Dim intCustSrNo As Double
+        Dim currentId As Double
+        
+        Set ws = Worksheets("Registro de Clientes (database)")
+        LastRow = Worksheets("Registro de Clientes (database)").Cells(Rows.count, 1).End(xlUp).Row
+        currentId = txtCustSrNo.Value
+        
+          
+        If LastRow < 4 Then
+            MsgBox "There is No Records !"
+            Me.txtId.SetFocus
+            Exit Sub
+        End If
+        
+        If currentId = 1 Then
+            MsgBox "This is Your's First Record !"
+            Me.txtId.SetFocus
+            Exit Sub
+        End If
+        
+         currentId = currentId - 1
+         intCustSrNo = currentId + 3
+
+
+            Me.txtCustSrNo.Text = ws.Cells(intCustSrNo, 1).Value
+            Me.txtId.Text = ws.Cells(intCustSrNo, 2).Value
+            Me.txtPerson.Text = ws.Cells(intCustSrNo, 3).Value
+            Me.cmbTypeOfDoc.Text = ws.Cells(intCustSrNo, 4).Value
+            Me.txtPerson1.Text = ws.Cells(intCustSrNo, 5).Value
+            Me.txtContact1.Text = ws.Cells(intCustSrNo, 6).Value
+            Me.txtPerson2.Text = ws.Cells(intCustSrNo, 7).Value
+            Me.txtContact2.Text = ws.Cells(intCustSrNo, 8).Value
+            Me.txtPerson3.Text = ws.Cells(intCustSrNo, 9).Value
+            Me.txtContact3.Text = ws.Cells(intCustSrNo, 10).Value
+            'Me.txtVendor.Text = ws.Cells(intCustSrNo, 11).Value
+            Me.cmbVendor.Text = ws.Cells(intCustSrNo, 11).Value
+            
+            Me.txtAddress.Text = ws.Cells(intCustSrNo, 12).Value
+            Me.txtEmail.Text = ws.Cells(intCustSrNo, 13).Value
+           
+            txtId.SetFocus
+          
+          If intCustSrNo = 3 Then
+            MsgBox "This is Your's First Record !"
+            Me.txtId.SetFocus
+            Exit Sub
+        End If
+        
+End Sub
+
+
+Private Sub btnMoveNext_Click()
+        Dim LastRow As Integer
+        Dim ws As Worksheet
+        Dim intCustSrNo As Double
+        Dim currentId As Double
+        Dim checkId As Double
+        
+        Set ws = Worksheets("Registro de Clientes (database)")
+        LastRow = Worksheets("Registro de Clientes (database)").Cells(Rows.count, 1).End(xlUp).Row
+        
+        If txtCustSrNo.Text = "" Then
+            Call showLastRecord
+            MsgBox "This is Your's Last Record !"
+            Me.txtId.SetFocus
+            Exit Sub
+        End If
+        
+        currentId = txtCustSrNo.Value
+        
+        If currentId = 0 Then
+            MsgBox "This is Your's Last Record !"
+            Me.txtId.SetFocus
+            Exit Sub
+        End If
+        
+        If LastRow < 4 Then
+            MsgBox "There is No Records !"
+            Me.txtId.SetFocus
+            Exit Sub
+        End If
+        
+         currentId = currentId + 4
+        
+        If currentId > LastRow Then
+            MsgBox "This is Your's Last Record !"
+            Me.txtId.SetFocus
+            Exit Sub
+        End If
+         
+         intCustSrNo = currentId
+
+
+            Me.txtCustSrNo.Text = ws.Cells(intCustSrNo, 1).Value
+            Me.txtId.Text = ws.Cells(intCustSrNo, 2).Value
+            Me.txtPerson.Text = ws.Cells(intCustSrNo, 3).Value
+            Me.cmbTypeOfDoc.Text = ws.Cells(intCustSrNo, 4).Value
+            Me.txtPerson1.Text = ws.Cells(intCustSrNo, 5).Value
+            Me.txtContact1.Text = ws.Cells(intCustSrNo, 6).Value
+            Me.txtPerson2.Text = ws.Cells(intCustSrNo, 7).Value
+            Me.txtContact2.Text = ws.Cells(intCustSrNo, 8).Value
+            Me.txtPerson3.Text = ws.Cells(intCustSrNo, 9).Value
+            Me.txtContact3.Text = ws.Cells(intCustSrNo, 10).Value
+            'Me.txtVendor.Text = ws.Cells(intCustSrNo, 11).Value
+            Me.cmbVendor.Text = ws.Cells(intCustSrNo, 11).Value
+            
+            Me.txtAddress.Text = ws.Cells(intCustSrNo, 12).Value
+            Me.txtEmail.Text = ws.Cells(intCustSrNo, 13).Value
+           
+            txtId.SetFocus
+          
+
+End Sub
+
+
+Private Sub btnMoveLast_Click()
+        Dim LastRow As Integer
+        Dim ws As Worksheet
+        Set ws = Worksheets("Registro de Clientes (database)")
+        LastRow = Worksheets("Registro de Clientes (database)").Cells(Rows.count, 1).End(xlUp).Row
+        
+          
+        If LastRow < 4 Then
+            MsgBox "There is No Records !"
+            Me.txtId.SetFocus
+            Exit Sub
+        End If
+        
+        Call showLastRecord
+        MsgBox "This is Your's Last Record !"
+End Sub
+
+
+Private Sub btnShowRecord_Click()
+    Call showLastRecord
+End Sub
+
+Private Sub UserForm_Initialize()
+    Call showLastRecord
+   ' txtVendor.Visible = False
+   btnDelete.Visible = False
+   btnShowRecord.Visible = False
+   btnMoveFirst.Visible = False
+   btnMovePrevios.Visible = False
+   btnMoveNext.Visible = False
+   btnMoveLast.Visible = False
+   txtPageNo.Visible = False
+   
+End Sub
+
+
+Private Sub btnAdd_Click()
+   
+    
+    Dim LastRow As Integer
+    Dim ws As Worksheet
+    Set ws = Worksheets("Registro de Clientes (database)")
+    LastRow = Worksheets("Registro de Clientes (database)").Cells(Rows.count, 1).End(xlUp).Row
+    
+    
+    If Trim(txtId.Text) = "" Then
+        MsgBox "Please fill the ID Code !"
+        Me.txtId.SetFocus
+        Exit Sub
+    End If
+    
+    If Len(Trim(txtId.Text)) <> 11 Then
+        MsgBox "Please fill the 11 Digits ID Code !"
+        Me.txtId.SetFocus
+        Exit Sub
+    End If
+        
+    
+    If Trim(cmbTypeOfDoc.Value) = "" Then
+        MsgBox "Please Select the Type of Documents !"
+        Me.cmbTypeOfDoc.SetFocus
+        Exit Sub
+    End If
+     
+    If Trim(txtPerson.Text) = "" Then
+        MsgBox "Please fill the Name of Persons/Company !"
+        Me.txtPerson.SetFocus
+        Exit Sub
+    End If
+    
+    If Trim(txtAddress.Text) = "" Then
+        MsgBox "Please fill the Address !"
+        Me.txtAddress.SetFocus
+        Exit Sub
+    End If
+     
+    If Trim(txtEmail.Text) = "" Then
+        MsgBox "Please fill the Email !"
+        Me.txtEmail.SetFocus
+        Exit Sub
+    End If
+    
+    
+'    If Trim(txtVendor.Text) = "" Then
+'        MsgBox "Please fill the Vendor !"
+'        Me.txtVendor.SetFocus
+'        Exit Sub
+'    End If
+
+    
+    If Trim(cmbVendor.Value) = "" Then
+        MsgBox "Please fill the Vendor !"
+        Me.cmbVendor.SetFocus
+        Exit Sub
+    End If
+     
+    If Trim(txtPerson1.Text) = "" Then
+        MsgBox "Please fill the Name of Person1 !"
+        Me.txtPerson1.SetFocus
+        Exit Sub
+    End If
+    
+    If Trim(txtContact1.Text) = "" Then
+        MsgBox "Please fill the Contact/Mobile/Phone of Person1 !"
+        Me.txtContact1.SetFocus
+        Exit Sub
+    End If
+     
+    If Len(Trim(txtContact1.Text)) <> 10 Then
+        MsgBox "Please fill the 10 Digits Contact/Mobile/Phone of Person1 !"
+        Me.txtContact1.SetFocus
+        Exit Sub
+    End If
+     
+     
+     
+     
+    If Trim(txtContact2.Text) <> "" Then
+        
+        If Len(Trim(txtContact2.Text)) <> 10 Then
+            MsgBox "Please fill the 10 Digits Contact/Mobile/Phone of Person2 !"
+            Me.txtContact2.SetFocus
+            Exit Sub
+        End If
+        
+    End If
+    
+   If Trim(txtContact3.Text) <> "" Then
+        
+        If Len(Trim(txtContact3.Text)) <> 10 Then
+            MsgBox "Please fill the 10 Digits Contact/Mobile/Phone of Person3 !"
+            Me.txtContact3.SetFocus
+            Exit Sub
+        End If
+        
+    End If
+    
+   
+   answer = MsgBox("Are you sure you wish to Add the Record ?", vbYesNo + vbQuestion, "Add Record ?")
+    
+    If answer = vbNo Then
+         Exit Sub
+    End If
+
+     
+     rNo = LastRow
+    LastRow = LastRow + 1
+        
+    If LastRow = 4 Then
+        ws.Cells(LastRow, 1).Value = 1
+    Else
+        ws.Cells(LastRow, 1).Value = Range("A" & rNo).Value + 1
+    End If
+
+        txtCustSrNo.Text = ws.Cells(LastRow, 1).Value
+        
+        ws.Cells(LastRow, 2).Value = txtId.Value
+        ws.Cells(LastRow, 3).Value = txtPerson.Value
+        ws.Cells(LastRow, 4).Value = cmbTypeOfDoc.Value
+        ws.Cells(LastRow, 5).Value = txtPerson1.Value
+        ws.Cells(LastRow, 6).Value = txtContact1.Value
+        ws.Cells(LastRow, 7).Value = txtPerson2.Value
+        ws.Cells(LastRow, 8).Value = txtContact2.Value
+        ws.Cells(LastRow, 9).Value = txtPerson3.Value
+        ws.Cells(LastRow, 10).Value = txtContact3.Value
+        'ws.Cells(lastRow, 11).Value = txtVendor.Value
+        ws.Cells(LastRow, 11).Value = cmbVendor.Value
+        
+        
+        ws.Cells(LastRow, 12).Value = txtAddress.Value
+        ws.Cells(LastRow, 13).Value = txtEmail.Value
+        
+        MsgBox "Record Added Successfuly !"
+        Call btnClear_Click
+
+End Sub
+
+Private Sub btnClear_Click()
+
+        'txtCustSrNo.Text = ""
+        
+        txtId.Text = ""
+        txtPerson.Text = ""
+        cmbTypeOfDoc.Text = ""
+        txtPerson1.Text = ""
+        txtContact1.Text = ""
+        txtPerson2.Text = ""
+        txtContact2.Text = ""
+        txtPerson3.Text = ""
+        txtContact3.Text = ""
+        'txtVendor.Text = ""
+        cmbVendor.Text = ""
+        
+        txtAddress.Text = ""
+        txtEmail.Text = ""
+        
+        txtId.SetFocus
+
+End Sub
+
+
+Private Sub btnUpdate_Click()
+        Dim LastRow As Integer
+        LastRow = Worksheets("Registro de Clientes (database)").Cells(Rows.count, 1).End(xlUp).Row
+        Dim record As String
+        Dim ws As Worksheet
+        Set ws = Worksheets("Registro de Clientes (database)")
+        
+           If Trim(txtCustSrNo.Text) = "" Then
+                MsgBox "You don't have Access to update this Record !"
+                Me.txtId.SetFocus
+                Exit Sub
+           End If
+        
+        answer = MsgBox("Are you sure you wish to Update the Record ?", vbYesNo + vbQuestion, "Update Record ?")
+    
+        If answer = vbNo Then
+             Exit Sub
+        End If
+
+        
+        Dim intCustSrNo As Double
+        Dim rNo As Double
+        intCustSrNo = txtCustSrNo.Value
+        For i = 4 To LastRow
+                'If Worksheets("Registro de Clientes (database)").Cells(i, 1).Value = txtCustSrNo.Value Then
+                'If i = intCustSrNo Then
+                rNo = ws.Cells(i, 1).Value
+                
+                'If ws.Cells(i, 1).Value = intCustSrNo Then
+                If rNo = intCustSrNo Then
+                        
+                        'Call forUpdateCheck
+                        
+                        ws.Cells(i, 1).Value = txtCustSrNo.Value
+                        ws.Cells(i, 2).Value = txtId.Value
+                        ws.Cells(i, 3).Value = txtPerson.Value
+                        ws.Cells(i, 4).Value = cmbTypeOfDoc.Value
+                        ws.Cells(i, 5).Value = txtPerson1.Value
+                        ws.Cells(i, 6).Value = txtContact1.Value
+                        ws.Cells(i, 7).Value = txtPerson2.Value
+                        ws.Cells(i, 8).Value = txtContact2.Value
+                        ws.Cells(i, 9).Value = txtPerson3.Value
+                        ws.Cells(i, 10).Value = txtContact3.Value
+                        'ws.Cells(i, 11).Value = txtVendor.Value
+                        ws.Cells(i, 11).Value = cmbVendor.Value
+                        
+                        ws.Cells(i, 12).Value = txtAddress.Value
+                        ws.Cells(i, 13).Value = txtEmail.Value
+
+                      MsgBox ("Record Updated Successfuly !")
+                 Exit For
+                'Exit Sub
+                End If
+                
+                
+        Next
+Call btnMoveLast_Click
+End Sub
+
+Private Sub btnDelete_Click()
+        
+        Dim ws As Worksheet
+        Set ws = Worksheets("Registro de Clientes (database)")
+        ws.Select
+        'MsgBox (ActiveCell.Address)
+        
+        Dim rowNumber As Long
+        'MsgBox (ActiveCell.Row)
+        'rowNumber = ActiveCell.Row
+        
+           If Trim(txtCustSrNo.Text) = "" Then
+                MsgBox "You don't have Access to Delete this Record !"
+                Me.txtId.SetFocus
+                Exit Sub
+           End If
+        
+answer = MsgBox("Are you sure you wish to delete the Record ?", vbYesNo + vbQuestion, "Delete Record ?")
+
+
+    If answer = vbYes Then
+         rowNumber = txtCustSrNo.Value + 3
+         
+         If rowNumber = 3 Then
+             MsgBox "No Record(s) in Registro de Clientes (database) !"
+            Exit Sub
+         End If
+         
+         'rowNumber = ActiveCell.Row
+        ' Cells(currentRow, 1).EntireRow.Delete
+         Cells(rowNumber, 1).EntireRow.Delete
+         MsgBox "Record Deleted Successfuly !"
+         
+         'rowNumber = rowNumber + 1
+         
+            LastRow = Worksheets("Registro de Clientes (database)").Cells(Rows.count, 1).End(xlUp).Row
+            rowNumber = LastRow
+            
+            txtCustSrNo.Text = Worksheets("Registro de Clientes (database)").Cells(rowNumber, 1).Value
+            txtId.Text = Worksheets("Registro de Clientes (database)").Cells(rowNumber, 2).Value
+            txtPerson.Text = Worksheets("Registro de Clientes (database)").Cells(rowNumber, 3).Value
+            cmbTypeOfDoc.Text = Worksheets("Registro de Clientes (database)").Cells(rowNumber, 4).Value
+            txtPerson1.Text = Worksheets("Registro de Clientes (database)").Cells(rowNumber, 5).Value
+            txtContact1.Text = Worksheets("Registro de Clientes (database)").Cells(rowNumber, 6).Value
+            txtPerson2.Text = Worksheets("Registro de Clientes (database)").Cells(rowNumber, 7).Value
+            txtContact2.Text = Worksheets("Registro de Clientes (database)").Cells(rowNumber, 8).Value
+            txtPerson3.Text = Worksheets("Registro de Clientes (database)").Cells(rowNumber, 9).Value
+            txtContact3.Text = Worksheets("Registro de Clientes (database)").Cells(rowNumber, 10).Value
+            'txtVendor.Text = Worksheets("Registro de Clientes (database)").Cells(rowNumber, 11).Value
+            cmbVendor.Text = Worksheets("Registro de Clientes (database)").Cells(rowNumber, 11).Value
+            
+            txtAddress.Text = Worksheets("Registro de Clientes (database)").Cells(rowNumber, 12).Value
+            txtEmail.Text = Worksheets("Registro de Clientes (database)").Cells(rowNumber, 13).Value
+            
+            txtId.SetFocus
+
+    
+    End If
+
+    
+End Sub
+
+Private Sub btnExit_Click()
+    Me.Hide
+End Sub
+
+    Private Sub btnSearch_Click()
+    Dim id As String
+    id = Trim(txtSearch.Text)
+    id = LCase(id)
+    LastRow = Worksheets("Registro de Clientes (database)").Cells(Rows.count, 1).End(xlUp).Row
+    
+    Dim MobId As String
+    Dim contact1 As String
+    Dim contact2 As String
+    Dim contact3 As String
+    
+    Dim srno As String
+    
+    For i = 4 To LastRow
+        srno = Trim(LCase(Worksheets("Registro de Clientes (database)").Cells(i, 1).Value))
+        MobId = Trim(LCase(Worksheets("Registro de Clientes (database)").Cells(i, 2).Value))
+        contact1 = Trim(LCase(Worksheets("Registro de Clientes (database)").Cells(i, 6).Value))
+        contact2 = Trim(LCase(Worksheets("Registro de Clientes (database)").Cells(i, 8).Value))
+        contact3 = Trim(LCase(Worksheets("Registro de Clientes (database)").Cells(i, 10).Value))
+        
+        If id = "" Then
+            MsgBox ("Please Enter Value !")
+            Exit For
+        End If
+        
+
+        'If Worksheets("CODES").Cells(i, 1).Value = id Or Worksheets("CODES").Cells(i, 2).Value = id Or Worksheets("CODES").Cells(i, 3).Value = id Or Worksheets("CODES").Cells(i, 4).Value = id Then
+        If srno = id Or MobId = id Or contact1 = id Or contact2 = id Or contact3 = id Then
+            MsgBox ("Record Found !")
+            
+            
+            txtCustSrNo.Text = Worksheets("Registro de Clientes (database)").Cells(i, 1).Value
+            txtId.Text = Worksheets("Registro de Clientes (database)").Cells(i, 2).Value
+            txtPerson.Text = Worksheets("Registro de Clientes (database)").Cells(i, 3).Value
+            cmbTypeOfDoc.Text = Worksheets("Registro de Clientes (database)").Cells(i, 4).Value
+            txtPerson1.Text = Worksheets("Registro de Clientes (database)").Cells(i, 5).Value
+            txtContact1.Text = Worksheets("Registro de Clientes (database)").Cells(i, 6).Value
+            txtPerson2.Text = Worksheets("Registro de Clientes (database)").Cells(i, 7).Value
+            txtContact2.Text = Worksheets("Registro de Clientes (database)").Cells(i, 8).Value
+            txtPerson3.Text = Worksheets("Registro de Clientes (database)").Cells(i, 9).Value
+            txtContact3.Text = Worksheets("Registro de Clientes (database)").Cells(i, 10).Value
+            'txtVendor.Text = Worksheets("Registro de Clientes (database)").Cells(i, 11).Value
+            cmbVendor.Text = Worksheets("Registro de Clientes (database)").Cells(i, 11).Value
+            
+            txtAddress.Text = Worksheets("Registro de Clientes (database)").Cells(i, 12).Value
+            txtEmail.Text = Worksheets("Registro de Clientes (database)").Cells(i, 13).Value
+            
+            txtId.SetFocus
+            
+            Exit Sub
+
+        End If
+ 
+    Next
+        Call clearTextBox
+        MsgBox ("Record Not Found !")
+        txtSearch.SetFocus
+         Exit Sub
+
+
+End Sub
+
+Sub clearTextBox()
+    txtCustSrNo.Text = ""
+    txtId.Text = ""
+    cmbTypeOfDoc.Value = ""
+    txtPerson.Text = ""
+    txtAddress.Text = ""
+    txtEmail.Text = ""
+    'txtVendor.Text = ""
+    cmbVendor.Value = ""
+    
+    txtPerson1.Text = ""
+    txtContact1.Text = ""
+    txtPerson2.Text = ""
+    txtContact2.Text = ""
+    txtPerson3.Text = ""
+    txtContact3.Text = ""
+    txtId.SetFocus
+
+End Sub
+
+
+Sub showLastRecord()
+    
+            i = Worksheets("Registro de Clientes (database)").Cells(Rows.count, 1).End(xlUp).Row
+    
+            txtCustSrNo.Text = Worksheets("Registro de Clientes (database)").Cells(i, 1).Value
+            txtId.Text = Worksheets("Registro de Clientes (database)").Cells(i, 2).Value
+            txtPerson.Text = Worksheets("Registro de Clientes (database)").Cells(i, 3).Value
+            cmbTypeOfDoc.Text = Worksheets("Registro de Clientes (database)").Cells(i, 4).Value
+            txtPerson1.Text = Worksheets("Registro de Clientes (database)").Cells(i, 5).Value
+            txtContact1.Text = Worksheets("Registro de Clientes (database)").Cells(i, 6).Value
+            txtPerson2.Text = Worksheets("Registro de Clientes (database)").Cells(i, 7).Value
+            txtContact2.Text = Worksheets("Registro de Clientes (database)").Cells(i, 8).Value
+            txtPerson3.Text = Worksheets("Registro de Clientes (database)").Cells(i, 9).Value
+            txtContact3.Text = Worksheets("Registro de Clientes (database)").Cells(i, 10).Value
+            'txtVendor.Text = Worksheets("Registro de Clientes (database)").Cells(i, 11).Value
+            cmbVendor.Text = Worksheets("Registro de Clientes (database)").Cells(i, 11).Value
+            
+            txtAddress.Text = Worksheets("Registro de Clientes (database)").Cells(i, 12).Value
+            txtEmail.Text = Worksheets("Registro de Clientes (database)").Cells(i, 13).Value
+            
+            txtId.SetFocus
+            
+    
+  
+End Sub
+
+
+
+Sub forUpdateCheck()
+
+          
+    Dim LastRow As Integer
+    Dim ws As Worksheet
+    Set ws = Worksheets("Registro de Clientes (database)")
+    LastRow = Worksheets("Registro de Clientes (database)").Cells(Rows.count, 1).End(xlUp).Row
+    
+    
+    If Trim(txtId.Text) = "" Then
+        MsgBox "Please fill the ID Code !"
+        Me.txtId.SetFocus
+        Exit Sub
+    End If
+    
+    If Len(Trim(txtId.Text)) <> 11 Then
+        MsgBox "Please fill the ID Code 11 DIGITS !"
+        Me.txtId.SetFocus
+        Exit Sub
+    End If
+    
+    
+    If Trim(cmbTypeOfDoc.Value) = "" Then
+        MsgBox "Please Select the Type of Documents !"
+        Me.cmbTypeOfDoc.SetFocus
+        Exit Sub
+    End If
+     
+    If Trim(txtPerson.Text) = "" Then
+        MsgBox "Please fill the Name of Persons/Company !"
+        Me.txtPerson.SetFocus
+        Exit Sub
+    End If
+    
+    If Trim(txtAddress.Text) = "" Then
+        MsgBox "Please fill the Address !"
+        Me.txtAddress.SetFocus
+        Exit Sub
+    End If
+     
+    If Trim(txtEmail.Text) = "" Then
+        MsgBox "Please fill the Email !"
+        Me.txtEmail.SetFocus
+        Exit Sub
+    End If
+    
+    
+'    If Trim(txtVendor.Text) = "" Then
+'        MsgBox "Please fill the Vendor !"
+'        Me.txtVendor.SetFocus
+'        Exit Sub
+'    End If
+
+    
+    If Trim(cmbVendor.Value) = "" Then
+        MsgBox "Please fill the Vendor !"
+        Me.cmbVendor.SetFocus
+        Exit Sub
+    End If
+     
+    If Trim(txtPerson1.Text) = "" Then
+        MsgBox "Please fill the Name of Person1 !"
+        Me.txtPerson1.SetFocus
+        Exit Sub
+    End If
+    
+    If Trim(txtContact1.Text) = "" Then
+        MsgBox "Please fill the Contact/Mobile/Phone of Person1 !"
+        Me.txtContact1.SetFocus
+        Exit Sub
+    End If
+     
+   
+'    If Len(Trim(txtContact1.Text)) <> 11 Then
+'        MsgBox "Please fill the 11 DIGITS Contact/Mobile/Phone of Person1 !"
+'        Me.txtContact1.SetFocus
+'        Exit Sub
+'    End If
+    
+   
+   If Trim(txtContact1.Text) <> "" Then
+        
+        If Len(Trim(txtContact1.Text)) <> 10 Then
+            MsgBox "Please fill the 10 Digits Contact/Mobile/Phone of Person1 !"
+            Me.txtContact1.SetFocus
+            Exit Sub
+        End If
+        
+    End If
+    
+   
+    If Trim(txtContact2.Text) <> "" Then
+        
+        If Len(Trim(txtContact2.Text)) <> 10 Then
+            MsgBox "Please fill the 10 Digits Contact/Mobile/Phone of Person2 !"
+            Me.txtContact2.SetFocus
+            Exit Sub
+        End If
+        
+    End If
+    
+   If Trim(txtContact3.Text) <> "" Then
+        
+        If Len(Trim(txtContact3.Text)) <> 10 Then
+            MsgBox "Please fill the 10 Digits Contact/Mobile/Phone of Person3 !"
+            Me.txtContact3.SetFocus
+            Exit Sub
+        End If
+        
+    End If
+   
+   
+
+End Sub
+
